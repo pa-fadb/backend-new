@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint . --fix",
+    "db:merge": "npx aurora",
+    "db:generate": "npx prisma generate",
+    "db:types": "npm run db:merge && npm run db:generate",
+    "db:migrate": "npm run db:merge && npx prisma migrate dev"
   },
   "repository": {
     "type": "git",

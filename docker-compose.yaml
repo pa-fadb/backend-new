@@ -1,0 +1,11 @@
+services:
+  postgres:
+    container_name: vadb-postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=vadb
+    ports:
+      - "5432:5432"
+    restart: always
