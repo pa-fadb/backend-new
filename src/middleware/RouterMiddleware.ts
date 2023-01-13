@@ -1,7 +1,7 @@
 import fs from "fs";
 import { Application, Request, Response, NextFunction } from "express";
 import path from "path";
-import { ErrorObject } from "./interfaces/ApiRequest";
+import { ErrorObject } from "../interfaces/ApiRequest";
 
 const BASE_PATH = path.join(__dirname, "../", "../", "routes");
 
