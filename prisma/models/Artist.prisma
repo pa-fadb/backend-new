@@ -1,0 +1,30 @@
+model Artist {
+    id           Int             @id @default(autoincrement())
+    name         String
+    metadata     ArtistMetadata?
+    availability Availability
+    rights       Right[]
+    addedAt      DateTime
+    updatedAt    DateTime        @updatedAt
+
+    @@map("artists")
+}
+
+model Right {
+    id       Int    @id @default(autoincrement())
+    artist   Artist @relation(fields: [artistId], references: [id])
+    artistId Int
+}
+
+model ArtistMetadata {
+    id       Int    @id @default(autoincrement())
+    artist   Artist @relation(fields: [artistId], references: [id])
+    artistId Int @unique
+}
+
+enum Availability {
+    ALLOWED
+    DISALLOWED
+    VARIES
+    UNKNOWN
+}

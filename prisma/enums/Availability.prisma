@@ -1,0 +1,6 @@
+enum Availability {
+    ALLOWED
+    DISALLOWED
+    VARIES
+    UNKNOWN
+}

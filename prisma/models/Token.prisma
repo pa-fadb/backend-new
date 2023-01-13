@@ -1,0 +1,8 @@
+model Token {
+    id                 Int    @id @default(autoincrement())
+    token              String @unique
+    premissions_grant  Int    @default(0)
+    premissions_revoke Int    @default(0)
+
+    @@map("tokens")
+}

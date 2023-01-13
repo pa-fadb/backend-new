@@ -1,0 +1,22 @@
+model MusicLabel {
+    id           Int          @id @default(autoincrement())
+    name         String
+    availability Availability
+    artists      Artist[]
+
+    @@map("music_labels")
+}
+
+enum Availability {
+    ALLOWED
+    DISALLOWED
+    VARIES
+    UNKNOWN
+}
+
+model Artist {
+    id Int @id @default(autoincrement())
+
+    musicLabel   MusicLabel? @relation(fields: [musicLabelId], references: [id])
+    musicLabelId Int?
+}
