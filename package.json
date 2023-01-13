@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/pa-fadb/backend-new#readme",
   "dependencies": {
+    "@prisma/client": "^4.8.1",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

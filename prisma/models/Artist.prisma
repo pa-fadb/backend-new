@@ -19,7 +19,7 @@ model Right {
 model ArtistMetadata {
     id       Int    @id @default(autoincrement())
     artist   Artist @relation(fields: [artistId], references: [id])
-    artistId Int @unique
+    artistId Int    @unique
 }
 
 enum Availability {

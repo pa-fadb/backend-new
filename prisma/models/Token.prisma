@@ -1,6 +1,6 @@
 model Token {
-    id                 Int    @id @default(autoincrement())
-    token              String @unique
+    id                Int    @id @default(autoincrement())
+    token             String @unique
     permissions_grant  Int    @default(0)
     permissions_revoke Int    @default(0)
 
