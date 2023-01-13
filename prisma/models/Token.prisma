@@ -1,8 +1,8 @@
 model Token {
     id                Int    @id @default(autoincrement())
     token             String @unique
-    permissionsGrant  Int    @default(0)
-    permissionsRevoke Int    @default(0)
+    permissions_grant  Int    @default(0)
+    permissions_revoke Int    @default(0)
 
     @@map("tokens")
 }
