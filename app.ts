@@ -1,3 +1,4 @@
+import "reflect-metadata"
 import chalk from "chalk";
 import cors from "cors";
 import dotenv from "dotenv";
