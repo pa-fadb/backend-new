@@ -19,5 +19,23 @@
                 "!**/node_modules/**"
             ]
         },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Current File",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${file}",
+            "runtimeArgs": [
+                "-r", "ts-node/register",
+                "-r", "tsconfig-paths/register"
+            ],
+            "console": "integratedTerminal",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js",
+                "!**/node_modules/**"
+            ]
+        }
     ]
 }
