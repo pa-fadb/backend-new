@@ -1,10 +1,16 @@
-import { Router } from "express";
-
+import { Router } from "../src/util/ApiRouter";
 const router = Router();
 
-router.get("/", (req, res) => {
+class TeapotRequest {
+    message!: string;
+}
+
+router.get("/", TeapotRequest, (req, res, body) => {
     res.status(418).json({
-        message: "I'm a teapot"
+        error: 418,
+        status: 418,
+        message: "I'm a teapot",
+        data: body.message
     });
 });
 

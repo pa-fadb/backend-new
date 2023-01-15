@@ -4,3 +4,4 @@ package-lock.json
 schema.prisma
 node_modules
 data/
+dist/

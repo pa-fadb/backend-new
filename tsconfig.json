@@ -5,15 +5,17 @@
         "target": "esnext",
         "strict": true,
         "allowJs": true,
-        "declaration": true,
+        "declaration": false,
         "esModuleInterop": true,
         "removeComments": true,
         "noImplicitAny": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "plugins": [{ "transform": "typescript-rtti/dist/transformer" }]
     },
     "include": [
         "prisma/**/*.ts",
         "src/**/*.ts",
-        "routes/**/*.ts"
+        "routes/**/*.ts",
+        "app.ts"
     ]
 }
