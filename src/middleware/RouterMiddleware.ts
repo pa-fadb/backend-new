@@ -23,7 +23,6 @@ export class RouterMiddleware {
 
                 if (router.stack) {
                     router.use((error: ErrorObject, req: Request, res: Response, _: NextFunction) => {
-                        console.log(error);
                         if (error) {
                             return res.status(error.status).json(error);
                         }
