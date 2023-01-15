@@ -1,3 +1,7 @@
+/** @module ArtistDataUtils Contains data utilities for artists. */
+
+
+
 import { Artist } from "@prisma/client"
 import { Database } from "../../prisma"
 
@@ -9,6 +13,13 @@ let includeAll = {
 }
 
 
+
+/**
+ * Creates an artist for the database.
+ * 
+ * @param data The data required for the artist creation.
+ * @returns The created artist.
+ */
 export async function artistCreate(data: Artist) {
     return await Database.artist.create({
         data: data,
@@ -17,6 +28,12 @@ export async function artistCreate(data: Artist) {
 }
 
 
+/**
+ * Gets the artist from the database based on their ID.
+ * 
+ * @param artistId The artist's ID.
+ * @returns The artist with the ID.
+ */
 export async function artistGetFromId(artistId: number) {
     return await Database.artist.findFirst({
         where: {id: artistId},
@@ -24,6 +41,17 @@ export async function artistGetFromId(artistId: number) {
     });
 }
 
+
+/**
+ * Gets artists that have an exact name.
+ * This is not a search, rather it returns the artist bearing the exact name as the input.
+ * This also doesn't take into account artists' aliases.
+ * 
+ * For a proper search including aliases, see @see {@link artistSearchByNames}.
+ * 
+ * @param artistName Artist name to search for.
+ * @returns The artists that have the same name as {@link artistName}.
+ */
 export async function artistGetFromName(artistName: string) {
     return await Database.artist.findMany({
         where: {name: artistName},
@@ -32,24 +60,66 @@ export async function artistGetFromName(artistName: string) {
 }
 
 
+
+/**
+ * Searches and returns artists with the input's name or alias.
+ * 
+ * For exact name matching, see @see {@link artistGetFromName}.
+ * 
+ * @param artistNameOrAlias The artist's name or alias.
+ * @returns The artists that has the names or aliases partially matching {@link artistNameOrAlias}.
+ */
 export async function artistSearchByNames(artistNameOrAlias: string) {
-    // TODO
-    return await Database.artist.findMany();
+    let nameResult = await Database.artist.findMany({
+        where: {name: {search: artistNameOrAlias}},
+        include: includeAll
+    });
+
+    // TODO test for sql injection
+    let aliasResult = await Database.$queryRaw<Artist[]>`
+        SELECT artist
+        FROM (
+            SELECT artist, unnest(artistAliases) AS alias
+            FROM artist_metadatas
+        )
+        WHERE alias LIKE ${artistNameOrAlias}
+    `;
+
+    return [...nameResult, ...aliasResult]
 }
 
-export async function artistSearchFull(query: string) {
-    let nameOrAliasResult = await artistSearchByNames(query);
+
+
+/**
+ * Searches the name, aliases, description, notes, genre, and socials from a search term.
+ * 
+ * @param searchTerm The search term.
+ * @returns Artists that have information relating to the search term.
+ */
+export async function artistSearchFull(searchTerm: string) {
+    let nameOrAliasResult = await artistSearchByNames(searchTerm);
 
     let miscResult = await Database.artist.findMany({
         where: {
             OR: [
-                {metadata: {description: {search: query}}},
-                {metadata: {notes: {search: query}}},
-                {metadata: {genre: {search: query}}}
+                {metadata: {description: {search: searchTerm}}},
+                {metadata: {notes: {search: searchTerm}}},
+                {metadata: {genre: {search: searchTerm}}}
                 // {metadata: {socials: {search: query}}}
             ]
-        }
+        },
+        include: includeAll
     });
+
+    // TODO test for sql injection
+    let socialsResult = await Database.$queryRaw<Artist[]>`
+        SELECT artist
+        FROM (
+            SELECT artist, unnest(socials) AS social
+            FROM artist_metadatas
+        )
+        WHERE social LIKE ${searchTerm}
+    `;
 
     return [...nameOrAliasResult, ...miscResult];
 }
