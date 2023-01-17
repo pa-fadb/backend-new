@@ -2,34 +2,20 @@
 
 
 
-import { Artist, Availability, Prisma } from "@prisma/client"
+import { Prisma, Artist, Availability } from "@prisma/client"
 import { Database } from "../../prisma"
 
+import { ArtistMetadataCreateTemplate } from "./artistmetadata";
+import { RightCreateTemplate } from "./right";
 
 
+
+/** The create template for artists. */
 export type ArtistCreateTemplate = {
     name: string,
-    metadata?: {
-        artistAliases?: string[],
-        description?: string,
-        notes?: string,
-        genre?: string,
-        albums?: {
-            name: string,
-            tracks: {
-                title: string,
-                romanizedTitle?: string,
-                contributors: string[],
-                availability: Availability
-            }[]
-        }[],
-        socials?: string[]
-    },
+    metadata?: ArtistMetadataCreateTemplate,
     availability: Availability,
-    rights?: {
-        identifier: string,
-        isAllowed: boolean
-    }[];
+    rights?: RightCreateTemplate[];
 }
 
 
@@ -46,52 +32,12 @@ let includeAll: Prisma.ArtistInclude = {
  * @returns The created artist.
  */
 export async function artistCreate(createTemplate: ArtistCreateTemplate) {
-    let data: Prisma.ArtistCreateInput = {
-        name: createTemplate.name,
-        availability: createTemplate.availability,
-        metadata: createTemplate.metadata !== undefined ? {
-            create: {
-                artistAliases: createTemplate.metadata.artistAliases,
-                description: createTemplate.metadata.description,
-                notes: createTemplate.metadata.notes,
-                genre: createTemplate.metadata.genre,
-                albums: createTemplate.metadata.albums !== undefined ? {
-                    create: createTemplate.metadata.albums.map((albumTemplate) => {
-                        return {
-                            name: albumTemplate.name,
-                            tracks: albumTemplate.tracks !== undefined ? {
-                                create: albumTemplate.tracks
-                            } : undefined
-                        }
-                    })
-                } : undefined,
-                socials: createTemplate.metadata.socials
-            }
-        } : undefined,
-        rights: createTemplate.rights !== undefined ? {
-            create: createTemplate.rights
-        } : undefined,
-        addedAt: new Date(),
-    }
-    return await Database.artist.create({
-        data: data,
-        include: includeAll
-    });
+    // return await Database.artist.create({
+    //     data: data,
+    //     include: includeAll
+    // });
 }
 
-
-
-artistCreate({
-    name: "test",
-    metadata: {
-        artistAliases?: string[]
-        description
-        notes
-        genre
-        albums
-        socials
-    }
-})
 
 
 /**
