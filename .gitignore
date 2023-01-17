@@ -5,3 +5,5 @@ schema.prisma
 node_modules
 data/
 dist/
+
+*.ignore
