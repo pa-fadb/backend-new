@@ -6,6 +6,7 @@ import express from "express";
 import morgan from "morgan";
 import multer from "multer";
 import { RouterMiddleware } from "./src/middleware/RouterMiddleware";
+import { RateLimitMiddleware } from "./src/middleware/RateLimitMiddleware";
 
 dotenv.config();
 
@@ -58,6 +59,8 @@ app.use(morgan((tokens, req, res) => {
 
     return [`[${chalk.gray(format.format(now))}]`, statusHeader, method, tokens.url(req, res), statusString, "-", tokens["response-time"](req, res), "ms"].join(" ");
 }));
+
+app.use(RateLimitMiddleware.handle);
 
 RouterMiddleware.handle(app);
 
