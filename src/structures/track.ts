@@ -1,12 +1,7 @@
 /** @module TrackDataUtils Contains data utilities for tracks. */
-
-
 import { Prisma } from "@prisma/client"
-
 import { Availability } from "@prisma/client"
 import { ensureNotBlankString, ensureNotBlankStringArray } from "../util/templateValidation"
-
-
 
 /** The create template for tracks. */
 export type TrackCreateTemplate = {
@@ -15,7 +10,6 @@ export type TrackCreateTemplate = {
     contributors?: string[],
     availability: Availability
 }
-
 
 /**
  * Creates the input required for creating tracks in Prisma.

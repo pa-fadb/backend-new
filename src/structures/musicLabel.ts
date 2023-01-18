@@ -1,12 +1,7 @@
 /** @module MusicLabelDataUtils Contains data utilities for music labels. */
-
-
 import { Prisma, Availability } from "@prisma/client"
-
 import { ArtistCreateTemplate, artistCTToInput } from "./artist";
 import { isBlankArray } from "../util/templateValidation";
-
-
 
 /** The create template for music labels. */
 export type MusicLabelCreateTemplate = {
@@ -14,7 +9,6 @@ export type MusicLabelCreateTemplate = {
     availability: Availability,
     artists: ArtistCreateTemplate[]
 }
-
 
 /**
  * Creates the input required for creating msuic labels in Prisma.

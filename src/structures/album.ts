@@ -1,20 +1,13 @@
 /** @module AlbumDataUtils Contains data utilities for albums. */
-
-
 import { Prisma } from "@prisma/client"
-
 import { TrackCreateTemplate, trackCTToInput } from "./track"
 import { isBlankArray } from "../util/templateValidation"
-
-
 
 /** The create template for albums. */
 export type AlbumCreateTemplate = {
     name: string,
     tracks?: TrackCreateTemplate[]
 }
-
-
 
 /**
  * Creates the input required for creating albums in Prisma.

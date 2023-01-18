@@ -1,14 +1,8 @@
 /** @module ArtistDataUtils Contains data utilities for artists. */
-
-
-
 import { Prisma, Availability } from "@prisma/client"
-
-import { ArtistMetadataCreateTemplate, artistMetadataCTToInput } from "./artistmetadata";
+import { ArtistMetadataCreateTemplate, artistMetadataCTToInput } from "./artistMetadata";
 import { RightCreateTemplate, rightCTToInput } from "./right";
 import { isBlankArray } from "../util/templateValidation";
-
-
 
 /** The create template for artists. */
 export type ArtistCreateTemplate = {
@@ -17,7 +11,6 @@ export type ArtistCreateTemplate = {
     availability: Availability,
     rights?: RightCreateTemplate[];
 }
-
 
 /**
  * Creates the input required for creating artists in Prisma.
