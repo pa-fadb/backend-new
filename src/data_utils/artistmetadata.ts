@@ -4,7 +4,7 @@
 import { Prisma } from "@prisma/client"
 
 import { AlbumCreateTemplate, albumCTToInput } from "./album"
-import { isBlankArray, ensureNotBlankString, ensureNotBlankStringArray } from "./other"
+import { isBlankArray, ensureNotBlankString, ensureNotBlankStringArray } from "../util/templateValidation"
 
 
 

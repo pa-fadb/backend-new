@@ -6,7 +6,7 @@ import { Prisma, Availability } from "@prisma/client"
 
 import { ArtistMetadataCreateTemplate, artistMetadataCTToInput } from "./artistmetadata";
 import { RightCreateTemplate, rightCTToInput } from "./right";
-import { isBlankArray } from "./other";
+import { isBlankArray } from "../util/templateValidation";
 
 
 

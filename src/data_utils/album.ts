@@ -4,7 +4,7 @@
 import { Prisma } from "@prisma/client"
 
 import { TrackCreateTemplate, trackCTToInput } from "./track"
-import { isBlankArray } from "./other"
+import { isBlankArray } from "../util/templateValidation"
 
 
 

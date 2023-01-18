@@ -4,7 +4,7 @@
 import { Prisma } from "@prisma/client"
 
 import { Availability } from "@prisma/client"
-import { ensureNotBlankString, ensureNotBlankStringArray } from "./other"
+import { ensureNotBlankString, ensureNotBlankStringArray } from "../util/templateValidation"
 
 
 

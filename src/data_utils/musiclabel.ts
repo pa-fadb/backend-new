@@ -4,7 +4,7 @@
 import { Prisma, Availability } from "@prisma/client"
 
 import { ArtistCreateTemplate, artistCTToInput } from "./artist";
-import { isBlankArray } from "./other";
+import { isBlankArray } from "../util/templateValidation";
 
 
 
