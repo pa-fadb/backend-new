@@ -1,9 +1,10 @@
 /** @module MusicLabelDataUtils Contains data utilities for music labels. */
 
 
-import { Prisma, Artist, Availability } from "@prisma/client"
+import { Prisma, Availability } from "@prisma/client"
 
 import { ArtistCreateTemplate, artistCTToInput } from "./artist";
+import { isBlankArray } from "./other";
 
 
 
@@ -27,7 +28,7 @@ export function musicLabelCTToInput(musicLabelCT: MusicLabelCreateTemplate): Pri
         name: musicLabelCT.name,
         availability: musicLabelCT.availability,
         artists:
-            musicLabelCT.artists !== undefined && musicLabelCT.artists.length !== 0
+            musicLabelCT.artists !== undefined && !isBlankArray(musicLabelCT.artists)
             ? { create: musicLabelCT.artists.map((artist) => artistCTToInput(artist)) }
             : undefined
     }

@@ -4,7 +4,7 @@
 import { Prisma } from "@prisma/client"
 
 import { Availability } from "@prisma/client"
-import { ensureNotBlank } from "./other"
+import { ensureNotBlankString, ensureNotBlankStringArray } from "./other"
 
 
 
@@ -27,8 +27,8 @@ export type TrackCreateTemplate = {
 export function trackCTToInput(trackCT: TrackCreateTemplate): Prisma.TrackCreateWithoutAlbumInput {
     return {
         title: trackCT.title,
-        romanizedTitle: ensureNotBlank(trackCT.romanizedTitle),
-        contributors: ensureNotBlank(trackCT.contributors),
+        romanizedTitle: ensureNotBlankString(trackCT.romanizedTitle),
+        contributors: ensureNotBlankStringArray(trackCT.contributors),
         availability: trackCT.availability
     };
 }

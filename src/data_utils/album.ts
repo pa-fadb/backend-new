@@ -4,6 +4,7 @@
 import { Prisma } from "@prisma/client"
 
 import { TrackCreateTemplate, trackCTToInput } from "./track"
+import { isBlankArray } from "./other"
 
 
 
@@ -26,7 +27,7 @@ export function albumCTToInput(albumCT: AlbumCreateTemplate): Prisma.AlbumCreate
     return {
         name: albumCT.name,
         tracks: 
-            albumCT.tracks !== undefined && albumCT.tracks.length !== 0
+            albumCT.tracks !== undefined && !isBlankArray(albumCT.tracks)
             ? { create: albumCT.tracks.map((trackCT) => trackCTToInput(trackCT)) }
             : undefined
     };

@@ -4,7 +4,7 @@
 import { Prisma } from "@prisma/client"
 
 import { AlbumCreateTemplate, albumCTToInput } from "./album"
-import { ensureNotBlank } from "./other"
+import { isBlankArray, ensureNotBlankString, ensureNotBlankStringArray } from "./other"
 
 
 
@@ -28,14 +28,14 @@ export type ArtistMetadataCreateTemplate = {
  */
 export function artistMetadataCTToInput(artistMetadataCT: ArtistMetadataCreateTemplate): Prisma.ArtistMetadataCreateWithoutArtistInput {
     return {
-        artistAliases: ensureNotBlank(artistMetadataCT.artistAliases),
-        description: ensureNotBlank(artistMetadataCT.description),
-        notes: ensureNotBlank(artistMetadataCT.notes),
-        genre: ensureNotBlank(artistMetadataCT.genre),
+        artistAliases: ensureNotBlankStringArray(artistMetadataCT.artistAliases),
+        description: ensureNotBlankString(artistMetadataCT.description),
+        notes: ensureNotBlankString(artistMetadataCT.notes),
+        genre: ensureNotBlankString(artistMetadataCT.genre),
         albums: 
-            artistMetadataCT.albums !== undefined && artistMetadataCT.albums.length !== 0
+            artistMetadataCT.albums !== undefined && !isBlankArray(artistMetadataCT.albums)
             ? { create: artistMetadataCT.albums.map((albumCT) => albumCTToInput(albumCT)) }
             : undefined,
-        socials: ensureNotBlank(artistMetadataCT.socials)
+        socials: ensureNotBlankStringArray(artistMetadataCT.socials)
     }
 }

@@ -6,6 +6,7 @@ import { Prisma, Availability } from "@prisma/client"
 
 import { ArtistMetadataCreateTemplate, artistMetadataCTToInput } from "./artistmetadata";
 import { RightCreateTemplate, rightCTToInput } from "./right";
+import { isBlankArray } from "./other";
 
 
 
@@ -34,7 +35,7 @@ export function artistCTToInput(artistCT: ArtistCreateTemplate): Prisma.ArtistCr
             : undefined,
         availability: artistCT.availability,
         rights:
-            artistCT.rights !== undefined && artistCT.rights.length !== 0
+            artistCT.rights !== undefined && !isBlankArray(artistCT.rights)
             ? { create: artistCT.rights.map((rightCT) => rightCTToInput(rightCT)) }
             : undefined,
         addedAt: new Date()
