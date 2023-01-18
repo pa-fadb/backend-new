@@ -72,7 +72,7 @@ export function isBlankStringArray(array: string[] | undefined): boolean {
  * @returns The cleaned {@link array} if {@link array} is not empty, otherwise `undefined`.
  */
 export function ensureNotBlankStringArray(array: string[] | undefined): string[] | undefined {
-    if (array === undefined || isBlankStringArray(array)) return undefined;
+    if (array === undefined) return undefined;
 
     let newArray: string[] = [];
     array.forEach((item) => {
