@@ -1,4 +1,4 @@
-/** @module TrackDataUtils Contains structures for tracks. */
+/** @module TrackStructs Contains structures for tracks. */
 import { Prisma } from "@prisma/client"
 import { Availability } from "@prisma/client"
 import { ensureNotBlankString, ensureNotBlankStringArray } from "../util/templateValidation"

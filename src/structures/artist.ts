@@ -1,4 +1,4 @@
-/** @module ArtistStruct Contains data structures for artists. */
+/** @module ArtistStructs Contains data structures for artists. */
 import { Prisma, Availability } from "@prisma/client"
 import { ArtistMetadataCreateTemplate, artistMetadataCTToInput } from "./artistMetadata";
 import { RightCreateTemplate, rightCTToInput } from "./right";

@@ -1,4 +1,4 @@
-/** @module RightsDataUtils Contains structures for rights. */
+/** @module RightsStructs Contains structures for rights. */
 import { Prisma } from "@prisma/client"
 
 /** The create template for rights. */

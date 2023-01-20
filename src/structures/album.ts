@@ -1,4 +1,4 @@
-/** @module AlbumStruct Contains data structures for albums. */
+/** @module AlbumStructs Contains data structures for albums. */
 import { Prisma } from "@prisma/client"
 import { TrackCreateTemplate, trackCTToInput } from "./track"
 import { isBlankArray } from "../util/templateValidation"

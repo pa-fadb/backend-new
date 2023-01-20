@@ -1,4 +1,4 @@
-/** @module ArtistMetadataStruct Contains structures for artist metadatas. */
+/** @module ArtistMetadataStructs Contains structures for artist metadatas. */
 import { Prisma } from "@prisma/client"
 import { AlbumCreateTemplate, albumCTToInput } from "./album"
 import { isBlankArray, ensureNotBlankString, ensureNotBlankStringArray } from "../util/templateValidation"
