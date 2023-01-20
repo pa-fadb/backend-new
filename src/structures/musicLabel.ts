@@ -1,4 +1,4 @@
-/** @module MusicLabelDataUtils Contains data utilities for music labels. */
+/** @module MusicLabelStructs Contains structures for music labels. */
 import { Prisma, Availability } from "@prisma/client"
 import { ArtistCreateTemplate, artistCTToInput } from "./artist";
 import { isBlankArray } from "../util/templateValidation";
