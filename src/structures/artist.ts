@@ -1,5 +1,6 @@
 /** @module ArtistDataUtils Contains data utilities for artists. */
-import { Prisma, Availability } from "@prisma/client"
+import { Prisma, Artist, Availability } from "@prisma/client"
+import { Database } from "../../prisma";
 import { ArtistMetadataCreateTemplate, artistMetadataCTToInput } from "./artistMetadata";
 import { RightCreateTemplate, rightCTToInput } from "./right";
 import { isBlankArray } from "../util/templateValidation";
@@ -33,4 +34,25 @@ export function artistCTToInput(artistCT: ArtistCreateTemplate): Prisma.ArtistCr
             : undefined,
         addedAt: new Date()
     };
+}
+
+/** When used in a query, includes all relations that the artist has on return. */
+export let artistQueryIncludeAll: Prisma.ArtistInclude = {
+    metadata: true,
+    musicLabel: true,
+    rights: true
+}
+
+/**
+ * Creates an artist in the database using a template.
+ * 
+ * @param artistCT The create template.
+ * @returns The artist.
+ */
+export async function artistCreate(artistCT: ArtistCreateTemplate) {
+    let query = artistCTToInput(artistCT);
+    return await Database.artist.create({
+        data: query,
+        include: artistQueryIncludeAll
+    })
 }
