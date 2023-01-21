@@ -1,5 +1,6 @@
 /** @module MusicLabelStructs Contains structures for music labels. */
 import { Prisma, Availability } from "@prisma/client"
+import { Database } from "../../prisma";
 import { ArtistCreateTemplate, artistCTToInput } from "./artist";
 import { isBlankArray } from "../util/templateValidation";
 
@@ -25,5 +26,27 @@ export function musicLabelCTToInput(musicLabelCT: MusicLabelCreateTemplate): Pri
             musicLabelCT.artists !== undefined && !isBlankArray(musicLabelCT.artists)
             ? { create: musicLabelCT.artists.map((artist) => artistCTToInput(artist)) }
             : undefined
+    }
+}
+
+/** When used in a query, includes all relation s that the artist has on return. */
+export let musicLabelQueryIncludeAll: Prisma.MusicLabelInclude = {
+    artists: true
+}
+
+/** The music label structure. */
+export class MusicLabelStruct {
+    /**
+     * Creates a music label in the database using a template.
+     * 
+     * @param artistCT The create template.
+     * @returns The artist.
+     */
+    static async create(musicLabelCT: MusicLabelCreateTemplate) {
+        let query = musicLabelCTToInput(musicLabelCT);
+        return await Database.musicLabel.create({
+            data: query,
+            include: musicLabelQueryIncludeAll,
+        })
     }
 }

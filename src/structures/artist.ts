@@ -51,7 +51,7 @@ export class ArtistStruct {
      * @param artistCT The create template.
      * @returns The artist.
      */
-    static async artistCreate(artistCT: ArtistCreateTemplate) {
+    static async create(artistCT: ArtistCreateTemplate) {
         let query = artistCTToInput(artistCT);
         return await Database.artist.create({
             data: query,
