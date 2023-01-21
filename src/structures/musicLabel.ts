@@ -105,4 +105,17 @@ export class MusicLabelStruct {
             include: musicLabelQueryIncludeAll
         })
     }
+
+    /**
+     * Deletes the music label.
+     * Artists included within the label won't be deleted.
+     * 
+     * @param musicLabelID The music label ID.
+     * @returns The music label.
+     */
+    static async delete(musicLabelID: number) {
+        return await Database.musicLabel.delete({
+            where: { id: musicLabelID }
+        })
+    }
 }

@@ -127,4 +127,16 @@ export class ArtistStruct {
             include: artistQueryIncludeAll
         })
     }
+
+    /**
+     * Deletes the artist.
+     * 
+     * @param artistID The music label ID.
+     * @returns The music label.
+     */
+    static async delete(artistID: number) {
+        return await Database.artist.delete({
+            where: { id: artistID }
+        })
+    }
 }
