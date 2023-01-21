@@ -36,7 +36,7 @@ export function artistCTToInput(artistCT: ArtistCreateTemplate): Prisma.ArtistCr
     };
 }
 
-/** When used in a query, includes all relations that the artist has on return. */
+/** When used in a query, includes all relation s that the artist has on return. */
 export let artistQueryIncludeAll: Prisma.ArtistInclude = {
     metadata: true,
     musicLabel: true,
@@ -53,6 +53,6 @@ export async function artistCreate(artistCT: ArtistCreateTemplate) {
     let query = artistCTToInput(artistCT);
     return await Database.artist.create({
         data: query,
-        include: artistQueryIncludeAll
+        include: artistQueryIncludeAll,
     })
 }
