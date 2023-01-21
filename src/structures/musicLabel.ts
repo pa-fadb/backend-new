@@ -60,9 +60,8 @@ export class MusicLabelStruct {
      * @returns The music label.
      */
     static async create(musicLabelCT: MusicLabelCreateTemplate) {
-        let query = musicLabelCTToInput(musicLabelCT);
         return await Database.musicLabel.create({
-            data: query,
+            data: musicLabelCTToInput(musicLabelCT),
             include: musicLabelQueryIncludeAll,
         })
     }
@@ -74,10 +73,9 @@ export class MusicLabelStruct {
      * @returns The music label.
      */
     static async update(musicLabelID: number, musicLabelUT: MusicLabelUpdateTemplate) {
-        let query = musicLabelUTToInput(musicLabelUT);
         return await Database.musicLabel.update({
             where: { id: musicLabelID },
-            data: query,
+            data: musicLabelUTToInput(musicLabelUT),
             include: musicLabelQueryIncludeAll
         })
     }

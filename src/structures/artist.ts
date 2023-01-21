@@ -82,9 +82,8 @@ export class ArtistStruct {
      * @returns The artist.
      */
     static async create(artistCT: ArtistCreateTemplate) {
-        let query = artistCTToInput(artistCT);
         return await Database.artist.create({
-            data: query,
+            data: artistCTToInput(artistCT),
             include: artistQueryIncludeAll,
         })
     }
@@ -96,10 +95,9 @@ export class ArtistStruct {
      * @returns The artist.
      */
     static async update(artistID: number, artistUT: ArtistUpdateTemplate) {
-        let query = artistUTToInput(artistUT);
         return await Database.artist.update({
             where: { id: artistID },
-            data: query,
+            data: artistUTToInput(artistUT),
             include: artistQueryIncludeAll,
         })
     }
