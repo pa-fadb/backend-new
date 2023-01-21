@@ -101,4 +101,30 @@ export class ArtistStruct {
             include: artistQueryIncludeAll,
         })
     }
+
+    /**
+     * Gets the artist based on the ID.
+     * 
+     * @param artistID The artist's ID.
+     * @returns The artist.
+     */
+    static async getFromID(artistID: number) {
+        return await Database.artist.findUnique({
+            where: { id: artistID },
+            include: artistQueryIncludeAll
+        })
+    }
+
+    /**
+     * Returns all artists with the name using an exact search.
+     * 
+     * @param name The artist name.
+     * @returns The artists with that name.
+     */
+    static async getFromName(name: string) {
+        return await Database.artist.findMany({
+            where: { name: name },
+            include: artistQueryIncludeAll
+        })
+    }
 }

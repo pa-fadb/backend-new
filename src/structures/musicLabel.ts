@@ -79,4 +79,30 @@ export class MusicLabelStruct {
             include: musicLabelQueryIncludeAll
         })
     }
+
+    /**
+     * Gets the music label based on the ID.
+     * 
+     * @param musicLabelID The music label's ID.
+     * @returns The music label.
+     */
+    static async getFromID(musicLabelID: number) {
+        return await Database.musicLabel.findUnique({
+            where: { id: musicLabelID },
+            include: musicLabelQueryIncludeAll
+        })
+    }
+
+    /**
+     * Returns all music labels with the name using an exact search.
+     * 
+     * @param name The music label name.
+     * @returns The music labels with that name.
+     */
+    static async getFromName(name: string) {
+        return await Database.musicLabel.findMany({
+            where: { name: name },
+            include: musicLabelQueryIncludeAll
+        })
+    }
 }
