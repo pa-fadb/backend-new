@@ -43,16 +43,19 @@ export let artistQueryIncludeAll: Prisma.ArtistInclude = {
     rights: true
 }
 
-/**
- * Creates an artist in the database using a template.
- * 
- * @param artistCT The create template.
- * @returns The artist.
- */
-export async function artistCreate(artistCT: ArtistCreateTemplate) {
-    let query = artistCTToInput(artistCT);
-    return await Database.artist.create({
-        data: query,
-        include: artistQueryIncludeAll,
-    })
+/** The artist structure. */
+export class ArtistStruct {
+    /**
+     * Creates an artist in the database using a template.
+     * 
+     * @param artistCT The create template.
+     * @returns The artist.
+     */
+    static async artistCreate(artistCT: ArtistCreateTemplate) {
+        let query = artistCTToInput(artistCT);
+        return await Database.artist.create({
+            data: query,
+            include: artistQueryIncludeAll,
+        })
+    }
 }
