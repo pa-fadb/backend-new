@@ -2,7 +2,7 @@
 import { Prisma, Availability } from "@prisma/client"
 import { Database } from "../../prisma";
 import { ArtistCreateTemplate, artistCTToInput } from "./artist";
-import { isBlankArray } from "../util/templateValidation";
+import { isBlankArray, ensureNotBlankString } from "../util/templateValidation";
 
 /** The create template for music labels. */
 export type MusicLabelCreateTemplate = {
@@ -29,6 +29,23 @@ export function musicLabelCTToInput(musicLabelCT: MusicLabelCreateTemplate): Pri
     }
 }
 
+export type MusicLabelUpdateTemplate = {
+    name?: string,
+    availability?: Availability,
+    artists?: ArtistCreateTemplate[]
+}
+
+export function musicLabelUTToInput(musicLabelUT: MusicLabelUpdateTemplate): Prisma.MusicLabelUpdateInput {
+    return {
+        name: ensureNotBlankString(musicLabelUT.name),
+        availability: musicLabelUT.availability,
+        artists:
+            musicLabelUT.artists !== undefined && !isBlankArray(musicLabelUT.artists)
+            ? { create: musicLabelUT.artists.map((artist) => artistCTToInput(artist)) }
+            : undefined
+    }
+}
+
 /** When used in a query, includes all relation s that the artist has on return. */
 export let musicLabelQueryIncludeAll: Prisma.MusicLabelInclude = {
     artists: true
@@ -40,13 +57,28 @@ export class MusicLabelStruct {
      * Creates a music label in the database using a template.
      * 
      * @param artistCT The create template.
-     * @returns The artist.
+     * @returns The music label.
      */
     static async create(musicLabelCT: MusicLabelCreateTemplate) {
         let query = musicLabelCTToInput(musicLabelCT);
         return await Database.musicLabel.create({
             data: query,
             include: musicLabelQueryIncludeAll,
+        })
+    }
+
+    /**
+     * Updates a music label in the database using a template.
+     * 
+     * @param artistUT The update template.
+     * @returns The music label.
+     */
+    static async update(musicLabelID: number, musicLabelUT: MusicLabelUpdateTemplate) {
+        let query = musicLabelUTToInput(musicLabelUT);
+        return await Database.musicLabel.update({
+            where: { id: musicLabelID },
+            data: query,
+            include: musicLabelQueryIncludeAll
         })
     }
 }
