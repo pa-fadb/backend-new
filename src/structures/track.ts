@@ -26,4 +26,3 @@ export function trackCTToInput(trackCT: TrackCreateTemplate): Prisma.TrackCreate
         availability: trackCT.availability
     };
 }
-
