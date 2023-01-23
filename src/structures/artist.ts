@@ -3,7 +3,7 @@ import { Prisma, Artist, Availability } from "@prisma/client";
 import { Database } from "../../prisma";
 import { ArtistMetadataCreateTemplate, artistMetadataCTToInput } from "./artistMetadata";
 import { RightCreateTemplate, rightCTToInput } from "./right";
-import { toSafeName, toSafeNameSafe, isBlankArray, ensureNotBlankString } from "../util/templateValidation";
+import { toSafeName, ensureSafeName, isBlankArray, ensureNotBlankString } from "../util/templateValidation";
 
 /** The create template for artists. */
 export type ArtistCreateTemplate = {
@@ -56,7 +56,7 @@ export function artistUTToInput(artistUT: ArtistUpdateTemplate): Prisma.ArtistUp
     let ensuredName = ensureNotBlankString(artistUT.name)
     return {
         name: ensuredName,
-        safeName: toSafeNameSafe(ensuredName),
+        safeName: ensureSafeName(ensuredName),
         metadata:
             artistUT.metadata
             ? { create: artistMetadataCTToInput(artistUT.metadata) }

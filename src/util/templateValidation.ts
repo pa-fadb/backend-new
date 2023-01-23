@@ -18,7 +18,7 @@ export function toSafeName(name: string) {
  * @param name The name to convert.
  * @returns The safe name if {@link name} is a string, otherwise `undefined`.
  */
-export function toSafeNameSafe(name: string | undefined) {
+export function ensureSafeName(name: string | undefined) {
     return name !== undefined ? toSafeName(name) : undefined
 }
 
