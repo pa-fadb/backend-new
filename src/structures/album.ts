@@ -1,7 +1,7 @@
 /** @module AlbumStructs Contains data structures for albums. */
 import { Prisma } from "@prisma/client"
 import { TrackCreateTemplate, trackCTToInput } from "./track"
-import { isBlankArray } from "../util/templateValidation"
+import { toSafeName, isBlankArray } from "../util/templateValidation"
 
 /** The create template for albums. */
 export type AlbumCreateTemplate = {
@@ -19,7 +19,8 @@ export type AlbumCreateTemplate = {
 export function albumCTToInput(albumCT: AlbumCreateTemplate): Prisma.AlbumCreateWithoutArtistMetadataInput {
     return {
         name: albumCT.name,
-        tracks: 
+        safeName: toSafeName(albumCT.name),
+        tracks:
             albumCT.tracks !== undefined && !isBlankArray(albumCT.tracks)
             ? { create: albumCT.tracks.map((trackCT) => trackCTToInput(trackCT)) }
             : undefined
