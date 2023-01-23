@@ -1,7 +1,8 @@
 model Album {
-    id     Int     @id @default(autoincrement())
-    name   String
-    tracks Track[]
+    id       Int     @id @default(autoincrement())
+    name     String
+    safeName String
+    tracks   Track[]
 
     @@map("albums")
 }

@@ -1,6 +1,7 @@
 model MusicLabel {
     id           Int          @id @default(autoincrement())
     name         String
+    safeName     String
     availability Availability
     artists      Artist[]
 
