@@ -1,6 +1,7 @@
 model Artist {
     id           Int             @id @default(autoincrement())
     name         String
+    safeName     String
     metadata     ArtistMetadata?
     availability Availability
     rights       Right[]

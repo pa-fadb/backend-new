@@ -3,7 +3,7 @@ import { Prisma, Artist, Availability } from "@prisma/client";
 import { Database } from "../../prisma";
 import { ArtistMetadataCreateTemplate, artistMetadataCTToInput } from "./artistMetadata";
 import { RightCreateTemplate, rightCTToInput } from "./right";
-import { isBlankArray, ensureNotBlankString } from "../util/templateValidation";
+import { toSafeName, ensureSafeName, isBlankArray, ensureNotBlankString } from "../util/templateValidation";
 
 /** The create template for artists. */
 export type ArtistCreateTemplate = {
@@ -23,6 +23,7 @@ export type ArtistCreateTemplate = {
 export function artistCTToInput(artistCT: ArtistCreateTemplate): Prisma.ArtistCreateWithoutMusicLabelInput {
     return {
         name: artistCT.name,
+        safeName: toSafeName(artistCT.name),
         metadata:
             artistCT.metadata
             ? { create: artistMetadataCTToInput(artistCT.metadata) }
@@ -52,8 +53,10 @@ export type ArtistUpdateTemplate = {
  * Note that this doesn't include relations to the "upper level" (eg, no `artistId` included in the artist's metadata).
  */
 export function artistUTToInput(artistUT: ArtistUpdateTemplate): Prisma.ArtistUpdateWithoutMusicLabelInput {
+    let ensuredName = ensureNotBlankString(artistUT.name)
     return {
-        name: ensureNotBlankString(artistUT.name),
+        name: ensuredName,
+        safeName: ensureSafeName(ensuredName),
         metadata:
             artistUT.metadata
             ? { create: artistMetadataCTToInput(artistUT.metadata) }

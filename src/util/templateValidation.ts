@@ -12,6 +12,16 @@ export function toSafeName(name: string) {
     return name.trim().replaceAll(" ", "_").toLowerCase();
 }
 
+/**
+ * Like {@link toSafeName}, but returns `undefined` if {@link name} is `undefined`.
+ * 
+ * @param name The name to convert.
+ * @returns The safe name if {@link name} is a string, otherwise `undefined`.
+ */
+export function ensureSafeName(name: string | undefined) {
+    return name !== undefined ? toSafeName(name) : undefined
+}
+
 
 /**
  * Returns `true` if the string is not `undefined` and not `""`, otherwise `false`.

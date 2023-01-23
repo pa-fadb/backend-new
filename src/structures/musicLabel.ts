@@ -2,7 +2,7 @@
 import { Prisma, Availability } from "@prisma/client"
 import { Database } from "../../prisma";
 import { ArtistCreateTemplate, artistCTToInput } from "./artist";
-import { isBlankArray, ensureNotBlankString } from "../util/templateValidation";
+import { toSafeName, ensureSafeName, isBlankArray, ensureNotBlankString } from "../util/templateValidation";
 
 /** The create template for music labels. */
 export type MusicLabelCreateTemplate = {
@@ -21,6 +21,7 @@ export type MusicLabelCreateTemplate = {
 export function musicLabelCTToInput(musicLabelCT: MusicLabelCreateTemplate): Prisma.MusicLabelCreateInput {
     return {
         name: musicLabelCT.name,
+        safeName: toSafeName(musicLabelCT.name),
         availability: musicLabelCT.availability,
         artists:
             musicLabelCT.artists !== undefined && !isBlankArray(musicLabelCT.artists)
@@ -36,8 +37,10 @@ export type MusicLabelUpdateTemplate = {
 }
 
 export function musicLabelUTToInput(musicLabelUT: MusicLabelUpdateTemplate): Prisma.MusicLabelUpdateInput {
+    let ensuredName = ensureNotBlankString(musicLabelUT.name)
     return {
-        name: ensureNotBlankString(musicLabelUT.name),
+        name: ensuredName,
+        safeName: ensureSafeName(ensuredName),
         availability: musicLabelUT.availability,
         artists:
             musicLabelUT.artists !== undefined && !isBlankArray(musicLabelUT.artists)
